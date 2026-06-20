@@ -1,0 +1,299 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Wasmer
+providerId: wasmer
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: false
+tags:
+- WebAssembly
+- Wasm
+- Registry
+- Edge
+- Runtime
+- Plans
+description: >-
+  Wasmer offers a free-forever Hobby tier, a flat-rate Pro tier with
+  usage-based overages on Wasmer Edge resources (requests, bandwidth, CPU
+  hours, provisioned memory, storage, databases, domains, build minutes), and a
+  custom Enterprise / Subhosting tier. The Wasmer Registry GraphQL API and
+  package publishing are available across tiers; Edge consumption is what drives
+  metered cost. Overage rates and quotas are taken from the public pricing page
+  and are not reconciled against an account invoice in this artifact.
+notes: >-
+  Pricing reflects the wasmer.io/pricing page; verify current quotas, overage
+  rates, and Edge usage pricing on the live page during reconciliation.
+sources:
+- https://wasmer.io/pricing
+- https://docs.wasmer.io/edge
+- https://docs.wasmer.io/registry
+plans:
+- id: wasmer-hobby
+  name: Hobby
+  type: free
+  description: >-
+    Free-forever tier for individual hobby projects, including registry
+    publishing and a capped allotment of Wasmer Edge resources.
+  entries:
+  - label: Apps
+    name: apps
+    type: quota
+    metric: apps
+    limit: 3
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Requests
+    name: requests
+    type: quota
+    metric: requests
+    limit: 100000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Bandwidth
+    name: bandwidth
+    type: quota
+    metric: gigabytes
+    limit: 150
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Active CPU Hours
+    name: cpu_hours
+    type: quota
+    metric: hours
+    limit: 50
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Provisioned Memory
+    name: provisioned_memory
+    type: quota
+    metric: gb_hours
+    limit: 500
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Volume Storage
+    name: volume_storage
+    type: quota
+    metric: gigabytes
+    limit: 1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Package Storage
+    name: package_storage
+    type: quota
+    metric: gigabytes
+    limit: 1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Custom Domains
+    name: custom_domains
+    type: quota
+    metric: domains
+    limit: 50
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Build Minutes
+    name: build_minutes
+    type: quota
+    metric: minutes
+    limit: 500
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  elements:
+  - name: Registry GraphQL API
+  - name: Package Publishing
+  - name: Wasmer Edge
+  - name: 1-Day Log Retention
+  - name: Community Support
+- id: wasmer-pro
+  name: Pro
+  type: paid
+  description: >-
+    $10/month team tier with higher Edge quotas and usage-based overages on
+    every metered Edge resource.
+  entries:
+  - label: Base Subscription
+    name: base
+    type: flat
+    metric: subscription
+    limit: 1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $10/month
+    userMultiplied: false
+  - label: Team Seats
+    name: seats
+    type: usage
+    metric: seats
+    limit: 2
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 2 included, then $5/seat
+    userMultiplied: true
+  - label: Apps
+    name: apps
+    type: usage
+    metric: apps
+    limit: 10
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 10 included, then $0.10 per app
+    userMultiplied: false
+  - label: Requests
+    name: requests
+    type: usage
+    metric: requests
+    limit: 1000000
+    timeFrame: month
+    geo: global
+    unit: 1000000
+    price: 1M included, then $0.20 per million
+    userMultiplied: false
+  - label: Bandwidth
+    name: bandwidth
+    type: usage
+    metric: gigabytes
+    limit: 1000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 1 TB included, then $0.10 per GB
+    userMultiplied: false
+  - label: Active CPU Hours
+    name: cpu_hours
+    type: usage
+    metric: hours
+    limit: 200
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 200 included, then $0.05 per hour
+    userMultiplied: false
+  - label: Provisioned Memory
+    name: provisioned_memory
+    type: usage
+    metric: gb_hours
+    limit: 2000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 2,000 included, then $0.01 per GB-hour
+    userMultiplied: false
+  - label: Storage (Volume & Package)
+    name: storage
+    type: usage
+    metric: gigabytes
+    limit: 10
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 10 GB included, then $0.05 per GB
+    userMultiplied: false
+  - label: Database Storage
+    name: database_storage
+    type: usage
+    metric: gigabytes
+    limit: 1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 1 GB included, then $10 per GB
+    userMultiplied: false
+  - label: SMTP Emails
+    name: smtp_emails
+    type: usage
+    metric: emails
+    limit: 10000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 10,000 included, then $0.001 per email
+    userMultiplied: false
+  - label: Custom Domains
+    name: custom_domains
+    type: usage
+    metric: domains
+    limit: 300
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 300 included, then $0.10 per domain
+    userMultiplied: false
+  - label: Build Minutes
+    name: build_minutes
+    type: usage
+    metric: minutes
+    limit: 5000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 5,000 included, then $0.002 per minute
+    userMultiplied: false
+  elements:
+  - name: Registry GraphQL API
+  - name: Package Publishing
+  - name: Wasmer Edge
+  - name: SSH/SFTP Access
+  - name: High Execution Priority
+  - name: 2-Week Log Retention
+  - name: Daily Backups
+  - name: Email Support
+- id: wasmer-enterprise
+  name: Enterprise & Subhosting
+  type: enterprise
+  description: >-
+    Custom-priced tier with unlimited users and apps, subhosting, private
+    dedicated locations, a 99.95% SLA, compliance features, and advanced
+    support. Contact Wasmer sales.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Unlimited Users and Apps
+  - name: Subhosting
+  - name: Private Dedicated Locations
+  - name: 99.95% SLA
+  - name: Compliance Features
+  - name: Highest Execution Priority
+  - name: Advanced Support
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

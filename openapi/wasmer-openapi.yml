@@ -1,0 +1,158 @@
+openapi: 3.0.1
+info:
+  title: Wasmer Registry GraphQL API
+  description: >-
+    OpenAPI modeling of the single public Wasmer GraphQL endpoint served at
+    https://registry.wasmer.io/graphql. Wasmer's Registry, Edge apps,
+    namespaces, and user surfaces are all exposed through one POST /graphql
+    endpoint that accepts the standard GraphQL JSON envelope (query, variables,
+    operationName). Many read queries are unauthenticated; mutations and
+    account-scoped queries require a wap_* Bearer token. This OpenAPI document
+    describes the HTTP transport of that GraphQL endpoint; the GraphQL schema
+    itself is documented in graphql/wasmer-schema.graphql.
+  termsOfService: https://wasmer.io/terms-of-service
+  contact:
+    name: Wasmer Support
+    url: https://docs.wasmer.io
+  version: '1.0'
+servers:
+  - url: https://registry.wasmer.io
+    description: Wasmer Registry GraphQL server
+paths:
+  /graphql:
+    post:
+      operationId: postGraphql
+      tags:
+        - GraphQL
+      summary: Execute a GraphQL query or mutation.
+      description: >-
+        Executes a GraphQL operation against the Wasmer Registry and Edge
+        platform. Supports package, namespace, app/deployment, and user
+        queries as well as publish and deploy mutations. Send the operation in
+        the standard GraphQL JSON envelope.
+      security:
+        - bearerAuth: []
+        - {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GraphQLRequest'
+            examples:
+              getPackageVersion:
+                summary: Resolve a package version
+                value:
+                  query: >-
+                    query { getPackageVersion(name: "python") { version
+                    repository homepage distribution { downloadUrl size } } }
+              viewer:
+                summary: Authenticated user
+                value:
+                  query: >-
+                    query { viewer { username email namespaces { edges { node
+                    { name } } } } }
+              deployApp:
+                summary: Deploy an app to Wasmer Edge
+                value:
+                  query: >-
+                    mutation DeployApp($input: DeployAppInput!) { deployApp(input:
+                    $input) { deployAppVersion { id url app { name } } } }
+                  variables:
+                    input:
+                      name: my-app
+                      owner: wasmer
+                      config:
+                        kind: wasmer.io/App.v0
+                        name: my-app
+                        package: wasmer/winterjs
+      responses:
+        '200':
+          description: >-
+            A GraphQL response. Note that GraphQL returns HTTP 200 even when the
+            operation produces field-level errors; inspect the errors array.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GraphQLResponse'
+        '401':
+          description: Missing or invalid Bearer token for an authenticated operation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GraphQLResponse'
+        '429':
+          description: Too many requests; the client is being throttled.
+    get:
+      operationId: getGraphqlPlayground
+      tags:
+        - GraphQL
+      summary: GraphiQL playground.
+      description: Returns the in-browser GraphiQL playground for interactive queries.
+      responses:
+        '200':
+          description: GraphiQL HTML playground.
+          content:
+            text/html:
+              schema:
+                type: string
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: wap_*
+      description: >-
+        Wasmer API token (wap_* prefix). Create one via `wasmer login` or the
+        dashboard, and supply it as `Authorization: Bearer <token>` or via the
+        WASMER_TOKEN environment variable.
+  schemas:
+    GraphQLRequest:
+      type: object
+      required:
+        - query
+      properties:
+        query:
+          type: string
+          description: The GraphQL query or mutation document.
+        variables:
+          type: object
+          additionalProperties: true
+          description: Variable values referenced by the operation.
+        operationName:
+          type: string
+          description: Name of the operation to run when the document has multiple.
+    GraphQLResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: The result of a successful operation, keyed by field name.
+        errors:
+          type: array
+          description: Field-level or request-level GraphQL errors, when present.
+          items:
+            $ref: '#/components/schemas/GraphQLError'
+    GraphQLError:
+      type: object
+      properties:
+        message:
+          type: string
+        path:
+          type: array
+          items:
+            type: string
+        locations:
+          type: array
+          items:
+            type: object
+            properties:
+              line:
+                type: integer
+              column:
+                type: integer
+        extensions:
+          type: object
+          additionalProperties: true

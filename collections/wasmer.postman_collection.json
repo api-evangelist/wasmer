@@ -1,0 +1,121 @@
+{
+  "info": {
+    "name": "Wasmer Registry GraphQL API",
+    "description": "GraphQL POST examples for the public Wasmer Registry and Edge API at https://registry.wasmer.io/graphql. Many read queries are unauthenticated; mutations and account-scoped queries require a wap_* Bearer token.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://registry.wasmer.io/graphql"
+    },
+    {
+      "key": "wasmerToken",
+      "value": "wap_xxxxxxxxxxxxxxxxxxxxxxxx"
+    }
+  ],
+  "item": [
+    {
+      "name": "Get Package Version",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"query { getPackageVersion(name: \\\"python\\\") { version repository homepage distribution { downloadUrl size } } }\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Get Package",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"query GetPackage($name: String!) { getPackage(name: $name) { name namespace private versions { version createdAt distribution { downloadUrl size } } } }\",\n  \"variables\": { \"name\": \"wasmer/winterjs\" }\n}"
+        }
+      }
+    },
+    {
+      "name": "Get Interface Version (WASI)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"query { getInterfaceVersion(name: \\\"wasi\\\", version: \\\"latest\\\") { interface { name description } packageVersions { edges { node { version package { name } distribution { downloadUrl } } } } } }\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Viewer (Authenticated User)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{wasmerToken}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"query { viewer { username email namespaces { edges { node { name } } } } }\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Get Deploy App (Edge)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{wasmerToken}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"query GetDeployApp($owner: String!, $name: String!) { getDeployApp(owner: $owner, name: $name) { id name url activeVersion { id version url createdAt } } }\",\n  \"variables\": { \"owner\": \"wasmer\", \"name\": \"my-app\" }\n}"
+        }
+      }
+    },
+    {
+      "name": "Publish Package",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{wasmerToken}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"mutation PublishPackage($input: PublishPackageInput!) { publishPackage(input: $input) { success packageVersion { version package { name } } } }\",\n  \"variables\": { \"input\": { \"name\": \"my-namespace/my-package\", \"version\": \"0.1.0\", \"manifest\": {}, \"file\": \"<signed-upload-url>\" } }\n}"
+        }
+      }
+    },
+    {
+      "name": "Deploy App (Edge)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{wasmerToken}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"mutation DeployApp($input: DeployAppInput!) { deployApp(input: $input) { deployAppVersion { id url app { name } } } }\",\n  \"variables\": { \"input\": { \"name\": \"my-app\", \"owner\": \"wasmer\", \"config\": { \"kind\": \"wasmer.io/App.v0\", \"name\": \"my-app\", \"package\": \"wasmer/winterjs\" } } }\n}"
+        }
+      }
+    }
+  ]
+}

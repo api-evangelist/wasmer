@@ -1,0 +1,126 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Wasmer
+providerId: wasmer
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: false
+tags:
+- WebAssembly
+- Wasm
+- Registry
+- Edge
+- Runtime
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Wasmer spend. Wasmer bills a flat Pro subscription plus
+  usage-based overages on Wasmer Edge resources - requests, bandwidth, active
+  CPU hours, provisioned memory, volume/package storage, database storage, SMTP
+  emails, custom domains, build minutes, and backups - once per-plan quotas are
+  exceeded. The Hobby tier is free and capped; Enterprise is custom-priced. The
+  Registry GraphQL API and package publishing are included across tiers, so cost
+  is driven almost entirely by Edge consumption.
+notes: >-
+  Per-resource overage rates are taken from the public pricing page and are
+  subject to change; verify against the Wasmer pricing page and an account
+  invoice during reconciliation.
+sources:
+- https://wasmer.io/pricing
+- https://docs.wasmer.io/edge
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Wasmer
+serviceCategory: Compute and Edge
+billingModel:
+  pricingCategory: Usage-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Usage
+  - Purchase
+  - Adjustment
+focusColumns:
+  ServiceName: Wasmer Edge
+  ServiceCategory: Compute and Edge
+  ProviderName: Wasmer
+  PublisherName: Wasmer
+  InvoiceIssuerName: Wasmer
+  BillingCurrency: USD
+  ChargeCategory: Usage
+  PricingCategory: Usage-Based
+meters:
+- name: requests
+  description: Edge HTTP requests served, included up to plan quota then $0.20 per million (Pro).
+  unit: requests
+  aggregation: sum
+  dimensions:
+  - account
+  - app
+- name: bandwidth
+  description: Edge egress bandwidth, included up to plan quota then $0.10 per GB (Pro).
+  unit: gigabytes
+  aggregation: sum
+  dimensions:
+  - account
+  - app
+- name: cpu_hours
+  description: Active CPU hours consumed by apps, included up to plan quota then $0.05 per hour (Pro).
+  unit: hours
+  aggregation: sum
+  dimensions:
+  - account
+  - app
+- name: provisioned_memory
+  description: Provisioned memory in GB-hours, included up to plan quota then $0.01 per GB-hour (Pro).
+  unit: gb_hours
+  aggregation: sum
+  dimensions:
+  - account
+  - app
+- name: storage
+  description: Volume and package storage, included up to plan quota then $0.05 per GB (Pro).
+  unit: gigabytes
+  aggregation: sum
+  dimensions:
+  - account
+  - app
+- name: database_storage
+  description: Database storage, included up to plan quota then $10 per GB (Pro).
+  unit: gigabytes
+  aggregation: sum
+  dimensions:
+  - account
+  - app
+- name: build_minutes
+  description: CI/build minutes, included up to plan quota then $0.002 per minute (Pro).
+  unit: minutes
+  aggregation: sum
+  dimensions:
+  - account
+  - app
+- name: seats
+  description: Team member seats beyond the included two on Pro at $5 per seat.
+  unit: seats
+  aggregation: sum
+  dimensions:
+  - account
+principles:
+- name: Visibility
+  description: Track Edge consumption per app against plan quotas in the Wasmer dashboard; watch request, CPU, and bandwidth burn.
+- name: Allocation
+  description: Map apps and namespaces to teams/cost centers; use per-app metering dimensions to attribute Edge spend.
+- name: Optimization
+  description: Right-size provisioned memory and CPU, cache to cut bandwidth, prune idle apps, and stay within plan quotas before overages kick in.
+- name: Accountability
+  description: Assign owners per app/namespace and review monthly Edge overages and seat counts against budget.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

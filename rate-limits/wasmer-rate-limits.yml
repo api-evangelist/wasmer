@@ -1,0 +1,68 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Wasmer
+providerId: wasmer
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: false
+tags:
+- WebAssembly
+- Wasm
+- Registry
+- Edge
+- Runtime
+- Rate Limiting
+- Quotas
+- Throttling
+description: >-
+  Wasmer does not publish explicit numeric rate limits for the public Registry
+  GraphQL API at registry.wasmer.io/graphql. Practical limits are governed by
+  plan quotas - apps, requests, bandwidth, active CPU hours, provisioned memory,
+  storage, build minutes - enforced per account on Wasmer Edge. The GraphQL
+  endpoint applies standard abuse protection; specific per-account request
+  ceilings are not documented and are not reconciled in this artifact.
+notes: >-
+  Verify any documented GraphQL request ceilings and per-plan Edge quota
+  enforcement on the pricing and docs pages during reconciliation; values may
+  change and unauthenticated traffic may be throttled more aggressively.
+sources:
+- https://wasmer.io/pricing
+- https://docs.wasmer.io/graphql-api
+- https://docs.wasmer.io/edge
+responseCodes:
+  throttled: 429
+limits:
+- name: GraphQL Requests
+  scope: account
+  metric: requests
+  limit: see provider documentation
+  notes: No explicit numeric ceiling documented for the public GraphQL endpoint; abuse protection applies.
+- name: Edge Requests (Plan Quota)
+  scope: account
+  metric: requests
+  limit: 100000 (Hobby) / 1000000 (Pro) per month, then metered
+  notes: Monthly Edge request allotment per plan; overages billed on Pro, capped on Hobby.
+- name: Bandwidth (Plan Quota)
+  scope: account
+  metric: gigabytes
+  limit: 150 (Hobby) / 1000 (Pro) per month, then metered
+  notes: Monthly Edge bandwidth allotment per plan.
+- name: Active CPU Hours (Plan Quota)
+  scope: account
+  metric: hours
+  limit: 50 (Hobby) / 200 (Pro) per month, then metered
+  notes: Monthly Edge compute allotment per plan.
+- name: Build Minutes (Plan Quota)
+  scope: account
+  metric: minutes
+  limit: 500 (Hobby) / 5000 (Pro) per month, then metered
+  notes: Monthly CI/build allotment per plan.
+policies:
+- name: Plan-Based Quotas
+  description: Effective limits are driven by per-plan Edge resource quotas; Pro overages are billed, Hobby is capped.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter and honor 429 responses on the GraphQL endpoint.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

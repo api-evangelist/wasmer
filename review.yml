@@ -1,0 +1,86 @@
+aid: wasmer
+name: Wasmer
+review:
+  question: Does Wasmer expose a documented public WebSocket or streaming API, or is its API a GraphQL HTTP endpoint?
+  answer: false
+  date: '2026-06-20'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was created. Wasmer's public API is a single GraphQL
+    endpoint served over HTTP POST at https://registry.wasmer.io/graphql. No
+    documented public GraphQL subscription, WebSocket (ws:// or wss://), or
+    Server-Sent Events streaming transport exists for the registry or Edge
+    platform. App log streaming is delivered through the wasmer CLI
+    (`wasmer app logs`), not a documented GraphQL subscription, so there is no
+    real-time/streaming surface to model in AsyncAPI.
+findings:
+  summary: |
+    Wasmer's public API is GraphQL, not REST. A single endpoint at
+    https://registry.wasmer.io/graphql backs wasmer.io, the wasmer CLI, and
+    wasmer.sh. The endpoint accepts HTTP POST with the standard GraphQL JSON
+    envelope (query, variables, operationName) and serves a GraphiQL playground
+    on GET. The schema spans the Registry (packages, package versions,
+    distributions, namespaces, interfaces), Wasmer Edge (apps and versioned
+    deployments), and users (the viewer query). Many read queries are
+    unauthenticated; mutations and account-scoped queries require a wap_*
+    Bearer token created via `wasmer login` (also overridable through the
+    WASMER_TOKEN environment variable). The OpenAPI document in this repo models
+    the HTTP transport of the POST /graphql endpoint; the GraphQL schema is
+    documented separately in graphql/wasmer-schema.graphql and
+    graphql/wasmer-graphql.md.
+  transports:
+    - protocol: GraphQL
+      scheme: https
+      baseURL: https://registry.wasmer.io/graphql
+      method: POST
+      documented: true
+      note: Single public GraphQL endpoint behind wasmer.io, the wasmer CLI, and wasmer.sh.
+    - protocol: REST
+      scheme: https
+      documented: false
+      note: Wasmer does not expose a documented public REST API; package and Edge operations go through GraphQL.
+    - protocol: GraphQL Subscriptions
+      scheme: wss
+      documented: false
+      note: No documented public GraphQL subscription transport.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No documented public WebSocket endpoint for the registry or Edge platform.
+  graphqlDomains:
+    - Packages and Versions (getPackage, getPackageVersion, publishPackage, distributions)
+    - Namespaces (users and organizations, createNamespace)
+    - Apps and Edge Deployments (getDeployApp, getAppByGlobalId, deployApp, app versions)
+    - Users and Auth (viewer, getUser, generateApiToken)
+    - Interfaces (getInterfaceVersion, e.g. WASI)
+  authentication:
+    scheme: Bearer
+    tokenFormat: wap_*
+    note: Created via `wasmer login` or the dashboard; may be supplied via WASMER_TOKEN. Endpoint overridable via WASMER_GRAPHQL_URL.
+sources:
+  - url: https://docs.wasmer.io/graphql-api
+    type: Documentation
+    note: Documents the public GraphQL API at registry.wasmer.io/graphql with example package queries.
+  - url: https://docs.wasmer.io/registry
+    type: Documentation
+    note: Registry overview - packages, namespaces, distributions, publishing.
+  - url: https://docs.wasmer.io/edge
+    type: Documentation
+    note: Wasmer Edge - apps, versioned deployments, rollback; deployed via the GraphQL API and CLI.
+  - url: https://docs.wasmer.io/registry/cli
+    type: Documentation
+    note: wasmer CLI (login, publish, deploy) consumes the GraphQL API; wap_* token auth.
+  - url: https://wasmer.io/pricing
+    type: Pricing
+    note: Hobby (free), Pro ($10/mo) with Edge usage overages, and Enterprise/Subhosting (custom).
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    The public API is GraphQL over HTTP POST with no documented streaming or
+    WebSocket surface, so no AsyncAPI document was authored. apis.yml models the
+    GraphQL transport across five sub-APIs (Registry GraphQL, Packages and
+    Namespaces, Apps and Edge Deployments, Users and Auth, and the CLI) with
+    GraphQL and OpenAPI properties pointing at graphql/wasmer-graphql.md,
+    graphql/wasmer-schema.graphql, and openapi/wasmer-openapi.yml.

@@ -1,0 +1,144 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Wasmer Registry GraphQL API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{wasmerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Registry",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Package Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://registry.wasmer.io/graphql",
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"query { getPackageVersion(name: \\\"python\\\") { version repository homepage distribution { downloadUrl size } } }\"}"
+            }
+          },
+          "docs": "Resolve a single package version and its distribution download URL."
+        },
+        {
+          "info": {
+            "name": "Get Package",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://registry.wasmer.io/graphql",
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"query GetPackage($name: String!) { getPackage(name: $name) { name namespace private versions { version createdAt distribution { downloadUrl size } } } }\",\"variables\":{\"name\":\"wasmer/winterjs\"}}"
+            }
+          },
+          "docs": "Resolve a package and all of its versions by fully-qualified name."
+        },
+        {
+          "info": {
+            "name": "Get Interface Version (WASI)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://registry.wasmer.io/graphql",
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"query { getInterfaceVersion(name: \\\"wasi\\\", version: \\\"latest\\\") { interface { name description } packageVersions { edges { node { version package { name } distribution { downloadUrl } } } } } }\"}"
+            }
+          },
+          "docs": "Resolve packages implementing a given interface, such as WASI."
+        },
+        {
+          "info": {
+            "name": "Publish Package",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://registry.wasmer.io/graphql",
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"mutation PublishPackage($input: PublishPackageInput!) { publishPackage(input: $input) { success packageVersion { version package { name } } } }\",\"variables\":{\"input\":{\"name\":\"my-namespace/my-package\",\"version\":\"0.1.0\",\"manifest\":{},\"file\":\"<signed-upload-url>\"}}}"
+            }
+          },
+          "docs": "Publish a package version to the registry (requires a wap_* Bearer token)."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Edge Apps",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Deploy App",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://registry.wasmer.io/graphql",
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"query GetDeployApp($owner: String!, $name: String!) { getDeployApp(owner: $owner, name: $name) { id name url activeVersion { id version url createdAt } } }\",\"variables\":{\"owner\":\"wasmer\",\"name\":\"my-app\"}}"
+            }
+          },
+          "docs": "Resolve a Wasmer Edge app and its active deployment version."
+        },
+        {
+          "info": {
+            "name": "Deploy App",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://registry.wasmer.io/graphql",
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"mutation DeployApp($input: DeployAppInput!) { deployApp(input: $input) { deployAppVersion { id url app { name } } } }\",\"variables\":{\"input\":{\"name\":\"my-app\",\"owner\":\"wasmer\",\"config\":{\"kind\":\"wasmer.io/App.v0\",\"name\":\"my-app\",\"package\":\"wasmer/winterjs\"}}}}"
+            }
+          },
+          "docs": "Deploy a package as an app to Wasmer Edge (requires a wap_* Bearer token)."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Users & Auth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Viewer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://registry.wasmer.io/graphql",
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"query { viewer { username email namespaces { edges { node { name } } } } }\"}"
+            }
+          },
+          "docs": "Resolve the currently authenticated user via a wap_* Bearer token."
+        }
+      ]
+    }
+  ]
+}

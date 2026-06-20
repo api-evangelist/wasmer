@@ -1,0 +1,305 @@
+"""
+Wasmer Registry GraphQL Schema (representative subset)
+
+This SDL is a REPRESENTATIVE model of the public Wasmer GraphQL API served at
+https://registry.wasmer.io/graphql. It captures the package, namespace,
+app/Edge-deployment, and user surfaces exercised by wasmer.io, the wasmer CLI,
+wasmer.sh, and the Wasmer SDKs. It is not the authoritative generated schema;
+field names and shapes are modeled from public documentation and client crates.
+
+Source: https://docs.wasmer.io/graphql-api | https://docs.wasmer.io/registry
+"""
+
+# ---------------------------------------------------------------------------
+# Scalars
+# ---------------------------------------------------------------------------
+
+scalar DateTime
+scalar JSON
+scalar BigInt
+
+# ---------------------------------------------------------------------------
+# Enums
+# ---------------------------------------------------------------------------
+
+enum PackageVersionState {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum DeployAppVersionState {
+  PENDING
+  ACTIVE
+  FAILED
+  ARCHIVED
+}
+
+enum NamespaceKind {
+  USER
+  ORGANIZATION
+}
+
+# ---------------------------------------------------------------------------
+# Root types
+# ---------------------------------------------------------------------------
+
+type Query {
+  "The currently authenticated user (requires a wap_* Bearer token)."
+  viewer: User
+
+  "Resolve a package by its fully-qualified name (e.g. \"wasmer/winterjs\")."
+  getPackage(name: String!): Package
+
+  "Resolve a single package version; defaults to the latest version."
+  getPackageVersion(name: String!, version: String): PackageVersion
+
+  "Resolve packages that implement a given interface (e.g. WASI)."
+  getInterfaceVersion(name: String!, version: String): InterfaceVersion
+
+  "Resolve a namespace (user or organization) by name."
+  getNamespace(name: String!): Namespace
+
+  "Resolve a user by username."
+  getUser(username: String!): User
+
+  "Resolve an Edge app by owner + name."
+  getDeployApp(owner: String!, name: String!): DeployApp
+
+  "Resolve an Edge app by its global id."
+  getAppByGlobalId(appId: ID!): DeployApp
+
+  "Resolve a specific Edge deployment (app version)."
+  getDeployAppVersion(owner: String!, name: String!, version: String!): DeployAppVersion
+
+  "Free-text search across published packages."
+  searchPackages(query: String!, first: Int): PackageConnection
+}
+
+type Mutation {
+  "Publish a package version to the registry."
+  publishPackage(input: PublishPackageInput!): PublishPackagePayload
+
+  "Deploy a package as an app to Wasmer Edge."
+  deployApp(input: DeployAppInput!): DeployAppPayload
+
+  "Create a namespace (organization)."
+  createNamespace(input: CreateNamespaceInput!): CreateNamespacePayload
+
+  "Generate a new API token for the authenticated user."
+  generateApiToken(input: GenerateApiTokenInput!): GenerateApiTokenPayload
+}
+
+# ---------------------------------------------------------------------------
+# Package & registry types
+# ---------------------------------------------------------------------------
+
+type Package {
+  id: ID!
+  name: String!
+  namespace: String
+  private: Boolean!
+  homepage: String
+  repository: String
+  description: String
+  lastVersion: PackageVersion
+  versions: [PackageVersion!]!
+  owner: Namespace
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type PackageVersion {
+  id: ID!
+  version: String!
+  description: String
+  manifest: JSON
+  repository: String
+  homepage: String
+  license: String
+  state: PackageVersionState!
+  package: Package!
+  distribution: PackageDistribution!
+  createdAt: DateTime!
+}
+
+type PackageDistribution {
+  downloadUrl: String!
+  size: BigInt
+  piritaDownloadUrl: String
+  piritaSize: BigInt
+  webcVersion: String
+}
+
+type PackageConnection {
+  edges: [PackageEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+type PackageEdge {
+  node: Package!
+  cursor: String!
+}
+
+type Interface {
+  name: String!
+  description: String
+}
+
+type InterfaceVersion {
+  version: String!
+  interface: Interface!
+  packageVersions: PackageVersionConnection!
+}
+
+type PackageVersionConnection {
+  edges: [PackageVersionEdge!]!
+  pageInfo: PageInfo!
+}
+
+type PackageVersionEdge {
+  node: PackageVersion!
+  cursor: String!
+}
+
+# ---------------------------------------------------------------------------
+# Namespace & user types
+# ---------------------------------------------------------------------------
+
+type Namespace {
+  id: ID!
+  name: String!
+  kind: NamespaceKind!
+  displayName: String
+  description: String
+  avatar: String
+  packages: PackageConnection
+  createdAt: DateTime!
+}
+
+type User {
+  id: ID!
+  username: String!
+  email: String
+  fullName: String
+  avatar: String
+  namespaces: NamespaceConnection!
+  packages: PackageConnection
+  apps: DeployAppConnection
+}
+
+type NamespaceConnection {
+  edges: [NamespaceEdge!]!
+  pageInfo: PageInfo!
+}
+
+type NamespaceEdge {
+  node: Namespace!
+  cursor: String!
+}
+
+# ---------------------------------------------------------------------------
+# Edge app / deployment types
+# ---------------------------------------------------------------------------
+
+type DeployApp {
+  id: ID!
+  name: String!
+  owner: Namespace!
+  url: String!
+  description: String
+  activeVersion: DeployAppVersion
+  versions: DeployAppVersionConnection!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type DeployAppVersion {
+  id: ID!
+  version: String!
+  url: String!
+  state: DeployAppVersionState!
+  app: DeployApp!
+  config: JSON
+  createdAt: DateTime!
+}
+
+type DeployAppConnection {
+  edges: [DeployAppEdge!]!
+  pageInfo: PageInfo!
+}
+
+type DeployAppEdge {
+  node: DeployApp!
+  cursor: String!
+}
+
+type DeployAppVersionConnection {
+  edges: [DeployAppVersionEdge!]!
+  pageInfo: PageInfo!
+}
+
+type DeployAppVersionEdge {
+  node: DeployAppVersion!
+  cursor: String!
+}
+
+# ---------------------------------------------------------------------------
+# Pagination
+# ---------------------------------------------------------------------------
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+# ---------------------------------------------------------------------------
+# Mutation inputs & payloads
+# ---------------------------------------------------------------------------
+
+input PublishPackageInput {
+  name: String!
+  version: String!
+  manifest: JSON!
+  file: String!
+  namespace: String
+  private: Boolean
+}
+
+type PublishPackagePayload {
+  success: Boolean!
+  packageVersion: PackageVersion
+}
+
+input DeployAppInput {
+  name: String!
+  owner: String
+  config: JSON!
+  makeDefault: Boolean
+}
+
+type DeployAppPayload {
+  deployAppVersion: DeployAppVersion!
+}
+
+input CreateNamespaceInput {
+  name: String!
+  displayName: String
+  description: String
+}
+
+type CreateNamespacePayload {
+  namespace: Namespace!
+}
+
+input GenerateApiTokenInput {
+  name: String!
+}
+
+type GenerateApiTokenPayload {
+  token: String!
+  tokenName: String!
+}
