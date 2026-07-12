@@ -133,6 +133,12 @@ apis:
     ssh) - a first-class consumer of the Registry GraphQL API that wraps publish
     and Edge deployment workflows.
 common:
+- type: VulnerabilityDisclosure
+  url: security/wasmer-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/wasmer-domain-security.yml
+- type: Authentication
+  url: authentication/wasmer-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/wasmerio
 - type: LinkedIn
@@ -147,6 +153,8 @@ common:
   url: rate-limits/wasmer-rate-limits.yml
 - type: FinOps
   url: finops/wasmer-finops.yml
+- type: Blog
+  url: https://blog.wasmer.io/feed
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

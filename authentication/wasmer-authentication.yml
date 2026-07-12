@@ -1,0 +1,15 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/wasmer-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: wap_*
+  description: 'Wasmer API token (wap_* prefix). Create one via `wasmer login` or the dashboard,
+    and supply it as `Authorization: Bearer <token>` or via the WASMER_TOKEN environment variable.'
+  sources:
+  - openapi/wasmer-openapi.yml
