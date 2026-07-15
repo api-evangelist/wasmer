@@ -133,6 +133,8 @@ apis:
     ssh) - a first-class consumer of the Registry GraphQL API that wraps publish
     and Edge deployment workflows.
 common:
+- type: AgenticAccess
+  url: agentic-access/wasmer-agentic-access.yml
 - type: VulnerabilityDisclosure
   url: security/wasmer-vulnerability-disclosure.yml
 - type: DomainSecurity
