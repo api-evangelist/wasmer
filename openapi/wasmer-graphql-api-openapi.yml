@@ -1,38 +1,28 @@
 openapi: 3.0.1
 info:
   title: Wasmer Registry GraphQL API
-  description: >-
-    OpenAPI modeling of the single public Wasmer GraphQL endpoint served at
-    https://registry.wasmer.io/graphql. Wasmer's Registry, Edge apps,
-    namespaces, and user surfaces are all exposed through one POST /graphql
-    endpoint that accepts the standard GraphQL JSON envelope (query, variables,
-    operationName). Many read queries are unauthenticated; mutations and
-    account-scoped queries require a wap_* Bearer token. This OpenAPI document
-    describes the HTTP transport of that GraphQL endpoint; the GraphQL schema
-    itself is documented in graphql/wasmer-schema.graphql.
+  description: OpenAPI modeling of the single public Wasmer GraphQL endpoint served at https://registry.wasmer.io/graphql. Wasmer's Registry, Edge apps, namespaces, and user surfaces are all exposed through one POST /graphql endpoint that accepts the standard GraphQL JSON envelope (query, variables, operationName). Many read queries are unauthenticated; mutations and account-scoped queries require a wap_* Bearer token. This OpenAPI document describes the HTTP transport of that GraphQL endpoint; the GraphQL schema itself is documented in graphql/wasmer-schema.graphql.
   termsOfService: https://wasmer.io/terms-of-service
   contact:
     name: Wasmer Support
     url: https://docs.wasmer.io
   version: '1.0'
 servers:
-  - url: https://registry.wasmer.io
-    description: Wasmer Registry GraphQL server
+- url: https://registry.wasmer.io
+  description: Wasmer Registry GraphQL server
+tags:
+- name: GraphQL
 paths:
   /graphql:
     post:
       operationId: postGraphql
       tags:
-        - GraphQL
+      - GraphQL
       summary: Execute a GraphQL query or mutation.
-      description: >-
-        Executes a GraphQL operation against the Wasmer Registry and Edge
-        platform. Supports package, namespace, app/deployment, and user
-        queries as well as publish and deploy mutations. Send the operation in
-        the standard GraphQL JSON envelope.
+      description: Executes a GraphQL operation against the Wasmer Registry and Edge platform. Supports package, namespace, app/deployment, and user queries as well as publish and deploy mutations. Send the operation in the standard GraphQL JSON envelope.
       security:
-        - bearerAuth: []
-        - {}
+      - bearerAuth: []
+      - {}
       requestBody:
         required: true
         content:
@@ -43,21 +33,15 @@ paths:
               getPackageVersion:
                 summary: Resolve a package version
                 value:
-                  query: >-
-                    query { getPackageVersion(name: "python") { version
-                    repository homepage distribution { downloadUrl size } } }
+                  query: 'query { getPackageVersion(name: "python") { version repository homepage distribution { downloadUrl size } } }'
               viewer:
                 summary: Authenticated user
                 value:
-                  query: >-
-                    query { viewer { username email namespaces { edges { node
-                    { name } } } } }
+                  query: query { viewer { username email namespaces { edges { node { name } } } } }
               deployApp:
                 summary: Deploy an app to Wasmer Edge
                 value:
-                  query: >-
-                    mutation DeployApp($input: DeployAppInput!) { deployApp(input:
-                    $input) { deployAppVersion { id url app { name } } } }
+                  query: 'mutation DeployApp($input: DeployAppInput!) { deployApp(input: $input) { deployAppVersion { id url app { name } } } }'
                   variables:
                     input:
                       name: my-app
@@ -68,9 +52,7 @@ paths:
                         package: wasmer/winterjs
       responses:
         '200':
-          description: >-
-            A GraphQL response. Note that GraphQL returns HTTP 200 even when the
-            operation produces field-level errors; inspect the errors array.
+          description: A GraphQL response. Note that GraphQL returns HTTP 200 even when the operation produces field-level errors; inspect the errors array.
           content:
             application/json:
               schema:
@@ -86,7 +68,7 @@ paths:
     get:
       operationId: getGraphqlPlayground
       tags:
-        - GraphQL
+      - GraphQL
       summary: GraphiQL playground.
       description: Returns the in-browser GraphiQL playground for interactive queries.
       responses:
@@ -97,20 +79,11 @@ paths:
               schema:
                 type: string
 components:
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: wap_*
-      description: >-
-        Wasmer API token (wap_* prefix). Create one via `wasmer login` or the
-        dashboard, and supply it as `Authorization: Bearer <token>` or via the
-        WASMER_TOKEN environment variable.
   schemas:
     GraphQLRequest:
       type: object
       required:
-        - query
+      - query
       properties:
         query:
           type: string
@@ -156,3 +129,9 @@ components:
         extensions:
           type: object
           additionalProperties: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: wap_*
+      description: 'Wasmer API token (wap_* prefix). Create one via `wasmer login` or the dashboard, and supply it as `Authorization: Bearer <token>` or via the WASMER_TOKEN environment variable.'
