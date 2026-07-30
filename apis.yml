@@ -7,7 +7,20 @@ description: Wasmer is a WebAssembly runtime, package registry, and edge platfor
   Wasmer Edge deploys those packages as auto-scaling apps, and the wasmer CLI and
   wasmer.sh interact with the platform through a single public GraphQL API at
   registry.wasmer.io/graphql.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/wasmer.png
 tags:
 - WebAssembly
 - Wasm
@@ -18,99 +31,6 @@ created: '2026-06-20'
 modified: '2026-06-20'
 specificationVersion: '0.19'
 apis:
-- aid: wasmer:wasmer-registry-graphql-api
-  name: Wasmer Registry GraphQL API
-  tags:
-  - GraphQL
-  - Registry
-  - WebAssembly
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.wasmer.io/graphql-api
-  baseURL: https://registry.wasmer.io/graphql
-  properties:
-  - url: https://docs.wasmer.io/graphql-api
-    type: Documentation
-  - url: https://docs.wasmer.io/registry
-    type: APIReference
-  - url: openapi/wasmer-openapi.yml
-    type: OpenAPI
-  - url: graphql/wasmer-graphql.md
-    type: GraphQL
-  - url: https://github.com/wasmerio/wasmer
-    type: GitHub
-  description: The single public GraphQL API behind wasmer.io, the wasmer CLI, and
-    wasmer.sh. A POST /graphql endpoint with optional Bearer (wap_*) auth that
-    spans the Registry, Edge apps, namespaces, and users.
-- aid: wasmer:wasmer-packages-namespaces-api
-  name: Wasmer Packages and Namespaces API
-  tags:
-  - GraphQL
-  - Packages
-  - Namespaces
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.wasmer.io/registry
-  baseURL: https://registry.wasmer.io/graphql
-  properties:
-  - url: https://docs.wasmer.io/registry
-    type: Documentation
-  - url: https://docs.wasmer.io/registry/manifest
-    type: APIReference
-  - url: openapi/wasmer-openapi.yml
-    type: OpenAPI
-  - url: graphql/wasmer-graphql.md
-    type: GraphQL
-  - url: https://github.com/wasmerio/wasmer
-    type: GitHub
-  description: GraphQL queries and mutations over WebAssembly packages, their
-    versions and distributions, and the namespaces (users and organizations) that
-    own them - getPackage, getPackageVersion, publishPackage, and namespace
-    resolvers.
-- aid: wasmer:wasmer-apps-edge-deployments-api
-  name: Wasmer Apps and Edge Deployments API
-  tags:
-  - GraphQL
-  - Edge
-  - Deployments
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.wasmer.io/edge
-  baseURL: https://registry.wasmer.io/graphql
-  properties:
-  - url: https://docs.wasmer.io/edge
-    type: Documentation
-  - url: https://docs.wasmer.io/edge/configuration
-    type: APIReference
-  - url: openapi/wasmer-openapi.yml
-    type: OpenAPI
-  - url: graphql/wasmer-graphql.md
-    type: GraphQL
-  - url: https://github.com/wasmerio/wasmer
-    type: GitHub
-  description: GraphQL surface for Wasmer Edge - deploy WebAssembly packages as
-    auto-scaling apps with versioned deployments, custom domains, and rollback via
-    getDeployApp, getAppByGlobalId, and deployApp.
-- aid: wasmer:wasmer-users-auth-api
-  name: Wasmer Users and Auth API
-  tags:
-  - GraphQL
-  - Users
-  - Auth
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.wasmer.io/registry/cli
-  baseURL: https://registry.wasmer.io/graphql
-  properties:
-  - url: https://docs.wasmer.io/registry/cli
-    type: Documentation
-  - url: https://docs.wasmer.io/graphql-api
-    type: APIReference
-  - url: openapi/wasmer-openapi.yml
-    type: OpenAPI
-  - url: graphql/wasmer-graphql.md
-    type: GraphQL
-  - url: https://github.com/wasmerio/wasmer
-    type: GitHub
-  description: Identity and account resolvers - the viewer query for the
-    authenticated user, getUser, and namespace ownership, authenticated with a
-    wap_* Bearer token created via wasmer login.
 - aid: wasmer:wasmer-cli
   name: Wasmer CLI
   tags:
@@ -129,9 +49,39 @@ apis:
     type: GraphQL
   - url: https://github.com/wasmerio/wasmer
     type: GitHub
-  description: The wasmer command-line client (wasmer login, publish, deploy, run,
-    ssh) - a first-class consumer of the Registry GraphQL API that wraps publish
-    and Edge deployment workflows.
+  description: >-
+    The wasmer command-line client (wasmer login, publish, deploy, run, ssh) - a first-class consumer
+    of the Registry GraphQL API that wraps publish and Edge deployment workflows.
+- aid: wasmer:wasmer-graphql-api
+  name: Wasmer GraphQL API
+  description: The GraphQL API from Wasmer — 1 operation(s) for graphql.
+  humanURL: https://docs.wasmer.io/graphql-api
+  baseURL: https://registry.wasmer.io/graphql
+  tags:
+  - GraphQL
+  properties:
+  - type: OpenAPI
+    url: openapi/wasmer-graphql-api-openapi.yml
+  - type: Documentation
+    url: https://docs.wasmer.io/graphql-api
+  - type: APIReference
+    url: https://docs.wasmer.io/registry
+  - type: GraphQL
+    url: graphql/wasmer-graphql.md
+  - type: GitHub
+    url: https://github.com/wasmerio/wasmer
+  - type: Documentation
+    url: https://docs.wasmer.io/registry
+  - type: APIReference
+    url: https://docs.wasmer.io/registry/manifest
+  - type: Documentation
+    url: https://docs.wasmer.io/edge
+  - type: APIReference
+    url: https://docs.wasmer.io/edge/configuration
+  - type: Documentation
+    url: https://docs.wasmer.io/registry/cli
+  - type: APIReference
+    url: https://docs.wasmer.io/graphql-api
 common:
 - type: AgenticAccess
   url: agentic-access/wasmer-agentic-access.yml
