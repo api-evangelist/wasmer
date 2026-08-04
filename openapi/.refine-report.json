@@ -1,0 +1,14 @@
+{
+  "provider": "wasmer",
+  "sources": [
+    "wasmer-graphql-api-openapi.yml"
+  ],
+  "outputs": [
+    "wasmer-graphql-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
