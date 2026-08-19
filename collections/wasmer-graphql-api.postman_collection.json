@@ -1,0 +1,307 @@
+{
+  "item": [
+    {
+      "id": "b9a614da-fd95-47f7-9b50-6e4f0c947d71",
+      "name": "GraphQL",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "82278a43-037f-4000-9db0-2f2ab615bd37",
+          "name": "Execute a GraphQL query or mutation.",
+          "request": {
+            "name": "Execute a GraphQL query or mutation.",
+            "description": {
+              "content": "Executes a GraphQL operation against the Wasmer Registry and Edge platform. Supports package, namespace, app/deployment, and user queries as well as publish and deploy mutations. Send the operation in the standard GraphQL JSON envelope.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "graphql"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"<string>\",\n  \"variables\": {\n    \"key_0\": 788.0854405521798,\n    \"key_1\": 295\n  },\n  \"operationName\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "16885702-7c3d-4beb-b99a-0d4ea91d0e66",
+              "name": "A GraphQL response. Note that GraphQL returns HTTP 200 even when the operation produces field-level errors; inspect the errors array.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "graphql"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"query { getPackageVersion(name: \\\"python\\\") { version repository homepage distribution { downloadUrl size } } }\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ],\n      \"locations\": [\n        {\n          \"line\": 6940,\n          \"column\": 9192\n        },\n        {\n          \"line\": 2954,\n          \"column\": 4302\n        }\n      ],\n      \"extensions\": {\n        \"key_0\": 1553.2878523817772,\n        \"key_1\": false,\n        \"key_2\": 7297,\n        \"key_3\": \"string\"\n      }\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ],\n      \"locations\": [\n        {\n          \"line\": 835,\n          \"column\": 3667\n        },\n        {\n          \"line\": 5984,\n          \"column\": 7831\n        }\n      ],\n      \"extensions\": {\n        \"key_0\": false\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ae8f73cc-1e76-44a0-8041-a9636093f804",
+              "name": "Missing or invalid Bearer token for an authenticated operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "graphql"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"query { getPackageVersion(name: \\\"python\\\") { version repository homepage distribution { downloadUrl size } } }\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"key_0\": 2696,\n    \"key_1\": 4273.945265759788\n  },\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ],\n      \"locations\": [\n        {\n          \"line\": 1061,\n          \"column\": 4106\n        },\n        {\n          \"line\": 8230,\n          \"column\": 4447\n        }\n      ],\n      \"extensions\": {\n        \"key_0\": 4928.96553137051,\n        \"key_1\": 2927,\n        \"key_2\": \"string\",\n        \"key_3\": 7581\n      }\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ],\n      \"locations\": [\n        {\n          \"line\": 3550,\n          \"column\": 8171\n        },\n        {\n          \"line\": 7993,\n          \"column\": 147\n        }\n      ],\n      \"extensions\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": 7204\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e1c3258c-51aa-48ae-ba95-101ec774458b",
+              "name": "Too many requests; the client is being throttled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "graphql"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"query { getPackageVersion(name: \\\"python\\\") { version repository homepage distribution { downloadUrl size } } }\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "75ad7e6c-9149-488b-b4bc-125b3524cde6",
+          "name": "GraphiQL playground.",
+          "request": {
+            "name": "GraphiQL playground.",
+            "description": {
+              "content": "Returns the in-browser GraphiQL playground for interactive queries.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "graphql"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/html"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c5b4c6ae-d2ae-46e0-8838-6c732bb3f916",
+              "name": "GraphiQL HTML playground.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "graphql"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/html"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://registry.wasmer.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "cbbf0e17-e361-4e5b-ba04-3b0dbc016457",
+    "name": "Wasmer Registry GraphQL API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAPI modeling of the single public Wasmer GraphQL endpoint served at https://registry.wasmer.io/graphql. Wasmer's Registry, Edge apps, namespaces, and user surfaces are all exposed through one POST /graphql endpoint that accepts the standard GraphQL JSON envelope (query, variables, operationName). Many read queries are unauthenticated; mutations and account-scoped queries require a wap_* Bearer token. This OpenAPI document describes the HTTP transport of that GraphQL endpoint; the GraphQL schema itself is documented in graphql/wasmer-schema.graphql.\n\nContact Support:\n Name: Wasmer Support",
+      "type": "text/plain"
+    }
+  }
+}

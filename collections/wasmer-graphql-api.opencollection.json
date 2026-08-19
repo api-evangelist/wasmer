@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Wasmer Registry GraphQL API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "GraphQL",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GraphiQL playground.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://registry.wasmer.io/graphql"
+          },
+          "docs": "Returns the in-browser GraphiQL playground for interactive queries."
+        },
+        {
+          "info": {
+            "name": "Execute a GraphQL query or mutation.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://registry.wasmer.io/graphql",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Executes a GraphQL operation against the Wasmer Registry and Edge platform. Supports package, namespace, app/deployment, and user queries as well as publish and deploy mutations. Send the operation in the standard GraphQL JSON envelope."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
