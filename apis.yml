@@ -7,6 +7,18 @@ description: Wasmer is a WebAssembly runtime, package registry, and edge platfor
   Wasmer Edge deploys those packages as auto-scaling apps, and the wasmer CLI and
   wasmer.sh interact with the platform through a single public GraphQL API at
   registry.wasmer.io/graphql.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
