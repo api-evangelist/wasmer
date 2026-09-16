@@ -65,16 +65,16 @@ apis:
   description: >-
     The wasmer command-line client (wasmer login, publish, deploy, run, ssh) - a first-class consumer
     of the Registry GraphQL API that wraps publish and Edge deployment workflows.
-- aid: wasmer:wasmer-graphql-api
-  name: Wasmer GraphQL API
-  description: The GraphQL API from Wasmer — 1 operation(s) for graphql.
-  humanURL: https://docs.wasmer.io/graphql-api
+- aid: wasmer:wasmer-graph-ql-api
+  name: Wasmer Graph QL API
+  description: The Graph QL API from Wasmer — 1 operation(s) for graph ql.
+  humanURL: https://docs.wasmer.io/registry/cli
   baseURL: https://registry.wasmer.io/graphql
   tags:
-  - GraphQL
+  - Graph QL
   properties:
   - type: OpenAPI
-    url: openapi/wasmer-graphql-api-openapi.yml
+    url: openapi/wasmer-graph-ql-api-openapi.yml
   - type: Documentation
     url: https://docs.wasmer.io/graphql-api
   - type: APIReference
