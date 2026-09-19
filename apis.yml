@@ -71,6 +71,8 @@ apis:
   humanURL: https://docs.wasmer.io/registry/cli
   baseURL: https://registry.wasmer.io/graphql
   tags:
+  - GraphQL
+  tags_raw:
   - Graph QL
   properties:
   - type: OpenAPI
