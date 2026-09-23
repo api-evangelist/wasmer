@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Wasmer Registry GraphQL API
-  description: OpenAPI modeling of the single public Wasmer GraphQL endpoint served at https://registry.wasmer.io/graphql. Wasmer's Registry, Edge apps, namespaces, and user surfaces are all exposed through one POST /graphql endpoint that accepts the standard GraphQL JSON envelope (query, variables, operationName). Many read queries are unauthenticated; mutations and account-scoped queries require a wap_* Bearer token. This OpenAPI document describes the HTTP transport of that GraphQL endpoint; the GraphQL schema itself is documented in graphql/wasmer-schema.graphql.
+  title: Wasmer Registry Graph QL API
+  description: OpenAPI modeling of the single public Wasmer GraphQL endpoint served at https://registry.wasmer.io/graphql.
   termsOfService: https://wasmer.io/terms-of-service
   contact:
     name: Wasmer Support
@@ -11,14 +11,14 @@ servers:
 - url: https://registry.wasmer.io
   description: Wasmer Registry GraphQL server
 tags:
-- name: GraphQL
+- name: Graph QL
 paths:
   /graphql:
     post:
       operationId: postGraphql
       tags:
-      - GraphQL
-      summary: Execute a GraphQL query or mutation.
+      - Graph QL
+      summary: Execute a GraphQL query or mutation
       description: Executes a GraphQL operation against the Wasmer Registry and Edge platform. Supports package, namespace, app/deployment, and user queries as well as publish and deploy mutations. Send the operation in the standard GraphQL JSON envelope.
       security:
       - bearerAuth: []
@@ -68,8 +68,8 @@ paths:
     get:
       operationId: getGraphqlPlayground
       tags:
-      - GraphQL
-      summary: GraphiQL playground.
+      - Graph QL
+      summary: GraphiQL playground
       description: Returns the in-browser GraphiQL playground for interactive queries.
       responses:
         '200':
@@ -99,9 +99,10 @@ components:
       type: object
       properties:
         data:
-          type: object
+          type:
+          - object
+          - 'null'
           additionalProperties: true
-          nullable: true
           description: The result of a successful operation, keyed by field name.
         errors:
           type: array
