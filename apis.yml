@@ -8,16 +8,22 @@ description: Wasmer is a WebAssembly runtime, package registry, and edge platfor
   wasmer.sh interact with the platform through a single public GraphQL API at
   registry.wasmer.io/graphql.
 deliveryModel:
-  model: saas
-  open_source: false
+  model: open-core
+  license: MIT
+  license_evidence:
+    repo: wasmerio/wasmer
+    spdx: MIT
+    stars: 21086
+  open_source: true
   commercial: true
   callable_host: true
-  label: Hosted service · you call their endpoint
-  confidence: high
+  label: Open core · an OSS project plus a commercial hosted product
+  confidence: medium
   source:
   - openapi
   - pricing
-  generated: '2026-08-28'
+  - repository-license
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: freemium
@@ -71,8 +77,6 @@ apis:
   humanURL: https://docs.wasmer.io/registry/cli
   baseURL: https://registry.wasmer.io/graphql
   tags:
-  - GraphQL
-  tags_raw:
   - Graph QL
   properties:
   - type: OpenAPI

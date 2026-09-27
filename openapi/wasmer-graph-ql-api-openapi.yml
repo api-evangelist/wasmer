@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Wasmer Registry Graph QL API
+  title: Wasmer Registry GraphQL API
   description: OpenAPI modeling of the single public Wasmer GraphQL endpoint served at https://registry.wasmer.io/graphql.
   termsOfService: https://wasmer.io/terms-of-service
   contact:
@@ -80,6 +80,20 @@ paths:
                 type: string
 components:
   schemas:
+    GraphQLResponse:
+      type: object
+      properties:
+        data:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+          description: The result of a successful operation, keyed by field name.
+        errors:
+          type: array
+          description: Field-level or request-level GraphQL errors, when present.
+          items:
+            $ref: '#/components/schemas/GraphQLError'
     GraphQLRequest:
       type: object
       required:
@@ -95,20 +109,6 @@ components:
         operationName:
           type: string
           description: Name of the operation to run when the document has multiple.
-    GraphQLResponse:
-      type: object
-      properties:
-        data:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-          description: The result of a successful operation, keyed by field name.
-        errors:
-          type: array
-          description: Field-level or request-level GraphQL errors, when present.
-          items:
-            $ref: '#/components/schemas/GraphQLError'
     GraphQLError:
       type: object
       properties:
