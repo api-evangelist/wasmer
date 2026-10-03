@@ -80,6 +80,27 @@ paths:
                 type: string
 components:
   schemas:
+    GraphQLError:
+      type: object
+      properties:
+        message:
+          type: string
+        path:
+          type: array
+          items:
+            type: string
+        locations:
+          type: array
+          items:
+            type: object
+            properties:
+              line:
+                type: integer
+              column:
+                type: integer
+        extensions:
+          type: object
+          additionalProperties: true
     GraphQLResponse:
       type: object
       properties:
@@ -109,27 +130,6 @@ components:
         operationName:
           type: string
           description: Name of the operation to run when the document has multiple.
-    GraphQLError:
-      type: object
-      properties:
-        message:
-          type: string
-        path:
-          type: array
-          items:
-            type: string
-        locations:
-          type: array
-          items:
-            type: object
-            properties:
-              line:
-                type: integer
-              column:
-                type: integer
-        extensions:
-          type: object
-          additionalProperties: true
   securitySchemes:
     bearerAuth:
       type: http
