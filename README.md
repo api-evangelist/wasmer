@@ -1,4 +1,4 @@
-# Wasmer (wasmer)
+# Wasmer
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,148 +66,124 @@
 
 Wasmer is a WebAssembly runtime, package registry, and edge platform. The Wasmer Registry stores and distributes WebAssembly packages and namespaces, Wasmer Edge deploys those packages as auto-scaling apps, and the wasmer CLI and wasmer.sh interact with the platform through a single public GraphQL API at registry.wasmer.io/graphql.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/wasmer/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/wasmer/refs/heads/main/apis.yml)
+**Areas:** WebAssembly · Wasm · Registry · Edge · Runtime
 
-## Tags
+## Wasmer on APIs.io
 
-- WebAssembly
-- Wasm
-- Registry
-- Edge
-- Runtime
+Everything profiled for Wasmer is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/wasmer/](https://apis.io/providers/wasmer/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (2)
 
-- **Created:** 2026-06-20
-- **Modified:** 2026-06-20
+- [Wasmer CLI](https://apis.io/apis/wasmer/wasmer-cli/) — The wasmer command-line client (wasmer login, publish, deploy, run, ssh) - a first-class consumer of the Registry GraphQL API that wraps publish and Edge…
+- [Wasmer Graph QL API](https://apis.io/apis/wasmer/wasmer-graph-ql-api/) — The Graph QL API from Wasmer — 1 operation(s) for graph ql.
 
-## APIs
+### Published properties
 
-### Wasmer Registry GraphQL API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-The single public GraphQL API behind wasmer.io, the wasmer CLI, and wasmer.sh. A POST /graphql endpoint with optional Bearer (wap_*) auth that spans the Registry, Edge apps, namespaces, and users.
+#### GraphQL (1)
 
-- **Human URL:** [https://docs.wasmer.io/graphql-api](https://docs.wasmer.io/graphql-api)
-- **Base URL:** `https://registry.wasmer.io/graphql`
+GraphQL schemas.
 
-#### Tags
+- [Wasmer Registry GraphQL API](https://apis.io/graphqls/wasmer/wasmer-graphql/)
 
-- GraphQL
-- Registry
-- WebAssembly
+#### Agentic access (1)
 
-#### Properties
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- [Documentation](https://docs.wasmer.io/graphql-api)
-- [API Reference](https://docs.wasmer.io/registry)
-- [OpenAPI](openapi/wasmer-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [GraphQL](graphql/wasmer-graphql.md) — [GraphQL Specification](https://spec.graphql.org/)
-- [GitHub](https://github.com/wasmerio/wasmer)
-- [Postman Collection](collections/wasmer.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/wasmer.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Wasmer Agentic Access](https://apis.io/agentic-access/wasmer/wasmer-agentic-access/)
 
-### Wasmer Packages and Namespaces API
+#### Collections (2)
 
-GraphQL queries and mutations over WebAssembly packages, their versions and distributions, and the namespaces (users and organizations) that own them - getPackage, getPackageVersion, publishPackage, and namespace resolvers.
+Postman and Open Collection request collections.
 
-- **Human URL:** [https://docs.wasmer.io/registry](https://docs.wasmer.io/registry)
-- **Base URL:** `https://registry.wasmer.io/graphql`
+- [Wasmer Registry GraphQL API](https://apis.io/collections/wasmer/open-wasmer/)
+- [Wasmer Registry GraphQL API](https://apis.io/collections/wasmer/open-wasmer-graphql-api/)
 
-#### Tags
+#### Security (3)
 
-- GraphQL
-- Packages
-- Namespaces
+Authentication, trust centre, and vulnerability disclosure.
 
-#### Properties
+- [Wasmer Authentication](https://apis.io/security/wasmer/wasmer-authentication/)
+- [Wasmer Domain Security](https://apis.io/security/wasmer/wasmer-domain-security/)
+- [Wasmer Vulnerability Disclosure](https://apis.io/security/wasmer/wasmer-vulnerability-disclosure/)
 
-- [Documentation](https://docs.wasmer.io/registry)
-- [API Reference](https://docs.wasmer.io/registry/manifest)
-- [OpenAPI](openapi/wasmer-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [GraphQL](graphql/wasmer-graphql.md) — [GraphQL Specification](https://spec.graphql.org/)
-- [GitHub](https://github.com/wasmerio/wasmer)
-- [Postman Collection](collections/wasmer.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/wasmer.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Plans and pricing (1)
 
-### Wasmer Apps and Edge Deployments API
+Published plans, tiers and prices.
 
-GraphQL surface for Wasmer Edge - deploy WebAssembly packages as auto-scaling apps with versioned deployments, custom domains, and rollback via getDeployApp, getAppByGlobalId, and deployApp.
+- [Wasmer Plans Pricing](https://apis.io/plans/wasmer/wasmer-plans-pricing/)
 
-- **Human URL:** [https://docs.wasmer.io/edge](https://docs.wasmer.io/edge)
-- **Base URL:** `https://registry.wasmer.io/graphql`
+#### Rate limits (1)
 
-#### Tags
+Published request limits.
 
-- GraphQL
-- Edge
-- Deployments
+- [Wasmer Rate Limits](https://apis.io/rate-limits/wasmer/wasmer-rate-limits/)
 
-#### Properties
+#### FinOps (1)
 
-- [Documentation](https://docs.wasmer.io/edge)
-- [API Reference](https://docs.wasmer.io/edge/configuration)
-- [OpenAPI](openapi/wasmer-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [GraphQL](graphql/wasmer-graphql.md) — [GraphQL Specification](https://spec.graphql.org/)
-- [GitHub](https://github.com/wasmerio/wasmer)
-- [Postman Collection](collections/wasmer.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/wasmer.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+What the API costs to run, by operation.
 
-### Wasmer Users and Auth API
+- [Wasmer Finops](https://apis.io/finops/wasmer/wasmer-finops/)
 
-Identity and account resolvers - the viewer query for the authenticated user, getUser, and namespace ownership, authenticated with a wap_* Bearer token created via wasmer login.
+## Where to find this API
 
-- **Human URL:** [https://docs.wasmer.io/registry/cli](https://docs.wasmer.io/registry/cli)
-- **Base URL:** `https://registry.wasmer.io/graphql`
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-#### Tags
-
-- GraphQL
-- Users
-- Auth
-
-#### Properties
-
-- [Documentation](https://docs.wasmer.io/registry/cli)
-- [API Reference](https://docs.wasmer.io/graphql-api)
-- [OpenAPI](openapi/wasmer-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [GraphQL](graphql/wasmer-graphql.md) — [GraphQL Specification](https://spec.graphql.org/)
-- [GitHub](https://github.com/wasmerio/wasmer)
-- [Postman Collection](collections/wasmer.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/wasmer.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Wasmer CLI
-
-The wasmer command-line client (wasmer login, publish, deploy, run, ssh) - a first-class consumer of the Registry GraphQL API that wraps publish and Edge deployment workflows.
-
-- **Human URL:** [https://docs.wasmer.io/registry/cli](https://docs.wasmer.io/registry/cli)
-- **Base URL:** `https://registry.wasmer.io/graphql`
-
-#### Tags
-
-- CLI
-- Tooling
-- Publish
-
-#### Properties
-
-- [Documentation](https://docs.wasmer.io/registry/cli)
-- [API Reference](https://docs.wasmer.io/install)
-- [GraphQL](graphql/wasmer-graphql.md) — [GraphQL Specification](https://spec.graphql.org/)
-- [GitHub](https://github.com/wasmerio/wasmer)
-- [Postman Collection](collections/wasmer.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/wasmer.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [GitHub Organization](https://github.com/wasmerio)
-- [LinkedIn](https://www.linkedin.com/company/wasmer)
 - [Website](https://wasmer.io)
 - [Documentation](https://docs.wasmer.io)
-- [Plans](plans/wasmer-plans-pricing.yml)
-- [Rate Limits](rate-limits/wasmer-rate-limits.yml)
-- [Fin Ops](finops/wasmer-finops.yml)
+- [Blog](https://blog.wasmer.io/feed)
+- [GitHub](https://github.com/wasmerio)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 28.3** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 51.4 |
+| Contract governance | 0.0 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 31.0 |
+| Access clarity | 7.9 |
+
+**Agent readiness 22.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 17.6** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/wasmer/](https://apis.io/providers/wasmer/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Wasmer: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/wasmer/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
